@@ -1,0 +1,26 @@
+import React from "react";
+import Image from "next/image";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import LoginContainer from "@/components/login/LoginContainer";
+
+export default function Login() {
+  return (
+    <div className="w-full h-full flex">
+      <Image
+        src="/wave.svg"
+        alt="Globe icon"
+        layout="responsive"
+        width={100}
+        height={100}
+        aria-hidden
+        className="opacity-30 absolute top-0 left-0 -z-10"
+      />
+      <div className="w-full ">
+        <ThemeToggle />
+      </div>
+      <div className="w-full h-full">
+        <LoginContainer />
+      </div>
+    </div>
+  );
+}
