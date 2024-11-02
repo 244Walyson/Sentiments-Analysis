@@ -1,3 +1,4 @@
+import { link } from "fs";
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
@@ -14,7 +15,14 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         backgroundDetail: "hsl(var(--background-detail))",
-        
+        link: "hsl(var(--link))",
+        navbar: {
+          DEFAULT: "hsl(var(--navbar-background))",
+          foreground: "hsl(var(--navbar-foreground))",
+        },
+        "dark-shade": {
+          DEFAULT: "hsl(var(--dark-shade))",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

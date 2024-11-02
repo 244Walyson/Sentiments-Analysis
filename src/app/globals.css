@@ -11,8 +11,11 @@
 
     --background-detail: 234 90.6% 20.8%;
 
-    --primary-text: 0 0 100%;
-    --secondary-text: 0 0 82%;
+    --dark-shade: 240 4.6% 12.7%;
+
+    --navbar-background: 240 5.3% 3.7%;
+    --navbar-foreground: 252 76.3% 85.1%;
+
     --link: 240 5.9% 10%;
 
     --card: 0 0% 100%;
@@ -68,6 +71,11 @@
     --foreground: 0 0% 98%;
 
     --background-detail: 234 90.6% 20.8%;
+
+    --dark-shade: 240 4.6% 12.7%;
+
+    --navbar-background: 240 5.3% 3.7%;
+    --navbar-foreground: 252 76.3% 85.1%;
 
     --link: 240 5.9% 10%;
 

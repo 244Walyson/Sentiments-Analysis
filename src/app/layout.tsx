@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Theme from "@/context/ThemeContext";
+import { ABeeZee } from "@next/font/google";
+import Navbar from "@/components/navbar";
+
+const abeezee = ABeeZee({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "Sentiments Analysis",
@@ -15,10 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className="dark:bg-background text-primary w-screen h-screen"
+        className={`${abeezee.className} dark:bg-background text-primary w-screen h-screen`}
         suppressHydrationWarning
       >
         <Theme>
+          <Navbar />
           <main className="pl-24 pr-10 py-10 h-full max-w-full overflow-x-hidden">
             {children}
           </main>

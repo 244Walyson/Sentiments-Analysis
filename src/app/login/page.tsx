@@ -13,7 +13,7 @@ export default function Login() {
         width={100}
         height={100}
         aria-hidden
-        className="opacity-30 absolute top-0 left-0 -z-10"
+        className="opacity-40 dark:opacity-30 absolute top-0 left-0 -z-10"
       />
       <div className="w-full ">
         <ThemeToggle />
