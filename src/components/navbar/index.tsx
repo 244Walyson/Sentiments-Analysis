@@ -5,9 +5,10 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { navbar_items } from "@/static/navbar_items";
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
+import Dialog from "../alertDialog";
 
 const Navbar = ({
   children,
@@ -16,9 +17,15 @@ const Navbar = ({
 }>) => {
   const pathName = usePathname();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(!open);
+  };
+
+  const handleLogout = () => {
+    // Lógica de logout, como limpar o estado do usuário, etc.
+    router.push("/login");
   };
 
   return (
@@ -37,8 +44,8 @@ const Navbar = ({
               </Avatar>
 
               {open && (
-                <div className="ml-4 text-navbar-foreground h-full w-full  flex flex-col">
-                  <span className="text-lg ">Vercel</span>
+                <div className="ml-4 text-navbar-foreground h-full w-full flex flex-col">
+                  <span className="text-lg">Vercel</span>
                   <span className="text-xs">vercel.com</span>
                 </div>
               )}
@@ -59,22 +66,42 @@ const Navbar = ({
           >
             {navbar_items &&
               navbar_items.map((item) => (
-                <Link href={item.path} key={item.id}>
-                  <li
-                    key={item.id}
-                    className={`w-full my-2 cursor-pointer rounded-2xl flex items-center hover:bg-dark-shade ${
-                      pathName === item.path ? "bg-dark-shade" : ""
-                    }`}
-                  >
-                    <NavbarItems
-                      path={item.path}
-                      icon={item.icon}
-                      text={item.text}
-                      filled={item.filled}
+                <li
+                  key={item.id}
+                  className={`w-full my-2 cursor-pointer rounded-2xl flex items-center hover:bg-dark-shade ${
+                    pathName === item.path ? "bg-dark-shade" : ""
+                  }`}
+                >
+                  {item.path === "/logout" ? (
+                    <Dialog
+                      title="Terminar sessão?"
+                      description="Você terá de fazer login novamente"
+                      btnOpen={
+                        <NavbarItems
+                          path={item.path}
+                          icon={item.icon}
+                          text={item.text}
+                          filled={item.filled}
+                        />
+                      }
+                      confirm="Confirmar"
+                      cancel="Cancelar"
+                      onCancel={() => setOpen(false)} // Fecha o diálogo
+                      onConfirm={handleLogout} // Chama handleLogout na confirmação
                     />
-                    {open && <span className="ml-4 ">{item.text}</span>}
-                  </li>
-                </Link>
+                  ) : (
+                    <Link href={item.path}>
+                      <NavbarItems
+                        path={item.path}
+                        icon={item.icon}
+                        text={item.text}
+                        filled={item.filled}
+                      />
+                    </Link>
+                  )}
+
+                  {open && <span className="ml-4">{item.text}</span>}
+                </li>
               ))}
           </ul>
         </div>
@@ -94,7 +121,7 @@ const Navbar = ({
         } h-full`}
       >
         {children}
-      </div>{" "}
+      </div>
     </div>
   );
 };

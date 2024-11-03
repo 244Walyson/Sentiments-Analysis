@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import Theme from "@/context/ThemeContext";
 import { ABeeZee } from "@next/font/google";
 import Navbar from "@/components/navbar";
@@ -26,11 +26,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Theme>
-          <Navbar>
-            <main className="pl-24 pr-10 py-14 h-full w-full overflow-x-hidden">
-              {children}
-            </main>
-          </Navbar>
+          <main className="pl-24 pr-10 py-14 h-full w-full overflow-x-hidden">
+            {children}
+          </main>
         </Theme>
       </body>
     </html>

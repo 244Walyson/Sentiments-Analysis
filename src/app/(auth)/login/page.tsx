@@ -15,9 +15,6 @@ export default function Login() {
         aria-hidden
         className="opacity-40 dark:opacity-30 absolute top-0 left-0 -z-10"
       />
-      <div className="w-full ">
-        <ThemeToggle />
-      </div>
       <div className="w-full h-full">
         <LoginContainer />
       </div>
