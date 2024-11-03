@@ -1,11 +1,11 @@
 import React from "react";
-import CommentItem from "./commentItem";
+import Card from "../card";
 
 const SearchContainer = () => {
   return (
     <div className="flex flex-col">
       <div className="grid grid-flow-row gap-4">
-        <CommentItem
+        <Card
           text={
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia ipsam laboriosam ducimus, beatae dolorem incidunt distinctio necessitatibus reiciendis nihil commodi totam quisquam, maxime repellat saepe sed nostrum ea doloremque architecto."
           }
@@ -13,7 +13,7 @@ const SearchContainer = () => {
           imgUrl={"https://github.com/shadcn.png"}
           polarity={"neutral"}
         />
-        <CommentItem
+        <Card
           text={
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia ipsam laboriosam ducimus, beatae dolorem incidunt distinctio necessitatibus reiciendis nihil commodi totam quisquam, maxime repellat saepe sed nostrum ea doloremque architecto."
           }
@@ -21,7 +21,7 @@ const SearchContainer = () => {
           imgUrl={"https://github.com/shadcn.png"}
           polarity={"negative"}
         />
-        <CommentItem
+        <Card
           text={
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia ipsam laboriosam ducimus, beatae dolorem incidunt distinctio necessitatibus reiciendis nihil commodi totam quisquam, maxime repellat saepe sed nostrum ea doloremque architecto."
           }
@@ -29,7 +29,7 @@ const SearchContainer = () => {
           imgUrl={"https://github.com/shadcn.png"}
           polarity={"positive"}
         />
-        <CommentItem
+        <Card
           text={
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia ipsam laboriosam ducimus, beatae dolorem incidunt distinctio necessitatibus reiciendis nihil commodi totam quisquam, maxime repellat saepe sed nostrum ea doloremque architecto."
           }
