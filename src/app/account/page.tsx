@@ -1,7 +1,12 @@
+import AccountPage from "@/components/account";
 import React from "react";
 
 const Account = () => {
-  return <div>Account</div>;
+  return (
+    <section>
+      <AccountPage />
+    </section>
+  );
 };
 
 export default Account;
