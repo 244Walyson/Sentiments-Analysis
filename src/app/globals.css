@@ -5,16 +5,16 @@
 @layer base {
   :root {
 
-    --background: 0 0% 100%;
+    --background: 220, 13%, 91%;
 
     --foreground: 240 10% 3.9%;
 
     --background-detail: 234 90.6% 20.8%;
 
-    --dark-shade: 240 4.6% 12.7%;
+    --dark-shade: 0 0% 96.1%;
 
-    --navbar-background: 240 5.3% 3.7%;
-    --navbar-foreground: 252 76.3% 85.1%;
+    --navbar-background: 0 0 100%;
+    --navbar-foreground: 240 4.5% 17.3%;
 
     --link: 240 5.9% 10%;
 
@@ -63,10 +63,17 @@
     --chart-5: 27 87% 67%;
 
     --radius: 0.5rem;
+
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
   .dark {
 
-    --background: 223 88.7% 13.9%;
+    --background: 240 80% 1%;
+    --background-login: 223 88.7% 13.9%;
 
     --foreground: 0 0% 98%;
 
@@ -121,6 +128,11 @@
 
     --chart-4: 280 65% 60%;
 
+    --chart-5: 340 75% 55%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
 }

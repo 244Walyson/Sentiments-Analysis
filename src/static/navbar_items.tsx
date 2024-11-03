@@ -1,4 +1,12 @@
-import { Bell, ChartColumn, ChartPie, User, Search, House } from "lucide-react";
+import {
+  Bell,
+  ChartColumn,
+  ChartPie,
+  User,
+  Search,
+  House,
+  LogOut,
+} from "lucide-react";
 import { ElementType } from "react";
 
 export interface INavbarItems {
@@ -48,5 +56,11 @@ export const navbar_items: INavbarItems[] = [
     path: "/account",
     icon: User,
     text: "account",
+  },
+  {
+    id: 7,
+    path: "/logout",
+    icon: LogOut,
+    text: "logout",
   },
 ];

@@ -2,12 +2,19 @@
 
 import { NavbarItems } from "@/components/navbar/navbarItems";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import Image from "next/image";
 import { navbar_items } from "@/static/navbar_items";
-import { ChevronRight, LogOut } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
+  const pathName = usePathname();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -15,66 +22,80 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className={`${
-        open ? "w-80" : "w-20"
-      } h-screen bg-navbar fixed flex flex-col justify-between items-center p-4 transition-all duration-300 ease-in-out`}
-    >
-      <div>
-        <div className="flex items-center justify-center ">
-          <Image
-            src="globe.svg"
-            alt="Perfil image"
-            width={50}
-            height={50}
-            className="mt-4 mb-8 rounded-2xl"
-          />
-          {open && (
-            <div className="ml-4 text-white h-full w-full  flex flex-col">
-              <span className="text-lg ">Vercel</span>
-              <span className="text-xs">vercel.com</span>
+    <div className="flex w-full h-full">
+      <nav
+        className={`${
+          open ? "w-80 p-4" : "w-20 p-4"
+        } h-screen bg-navbar fixed flex flex-col justify-between items-center transition-all duration-300 ease-in-out text-navbar-foreground`}
+      >
+        <div className="w-full">
+          <div className="flex items-center justify-center p-4 h-24">
+            <div className="flex w-full">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+
+              {open && (
+                <div className="ml-4 text-navbar-foreground h-full w-full  flex flex-col">
+                  <span className="text-lg ">Vercel</span>
+                  <span className="text-xs">vercel.com</span>
+                </div>
+              )}
             </div>
-          )}
+          </div>
+
+          <div className="items-center mt-4 flex justify-center">
+            <ChevronRight
+              className={`w-6 h-6 hover:bg-dark-shade rounded-full cursor-pointer top-4 transition-transform duration-300 ease-in-out ${
+                open ? "rotate-180" : ""
+              }`}
+              onClick={handleOpen}
+            />
+          </div>
+
+          <ul
+            className={`w-full space-y-11 mt-12 transition-opacity duration-300`}
+          >
+            {navbar_items &&
+              navbar_items.map((item) => (
+                <Link href={item.path} key={item.id}>
+                  <li
+                    key={item.id}
+                    className={`w-full my-2 cursor-pointer rounded-2xl flex items-center hover:bg-dark-shade ${
+                      pathName === item.path ? "bg-dark-shade" : ""
+                    }`}
+                  >
+                    <NavbarItems
+                      path={item.path}
+                      icon={item.icon}
+                      text={item.text}
+                      filled={item.filled}
+                    />
+                    {open && <span className="ml-4 ">{item.text}</span>}
+                  </li>
+                </Link>
+              ))}
+          </ul>
         </div>
 
-        <div className=" items-center flex justify-center">
-          <ChevronRight
-            className={`w-10 h-10 cursor-pointer top-4 transition-transform duration-300 ease-in-out ${
-              open ? "rotate-180" : ""
-            }`}
-            onClick={handleOpen}
-          />
+        <div className="w-full">
+          <div className="flex items-center p-2">
+            <div className="w-10 h-10">
+              <ThemeToggle />
+            </div>
+            {open && <span className="w-full ml-4">Tema</span>}
+          </div>
         </div>
-
-        <ul
-          className={`w-full space-y-2 mt-12 transition-opacity duration-300`}
-        >
-          {navbar_items &&
-            navbar_items.map((item) => (
-              <li key={item.id} className="flex items-center">
-                <NavbarItems
-                  path={item.path}
-                  icon={item.icon}
-                  text={item.text}
-                  filled={item.filled}
-                />
-                {open && <span className="ml-4 text-white">{item.text}</span>}
-              </li>
-            ))}
-        </ul>
-      </div>
-
-      <div className="">
-        <div className="flex items-center mb-4">
-          <LogOut className="w-10 h-10 cursor-pointer justify-center items-center" />
-          {open && <span className="ml-4 text-white">Logout</span>}
-        </div>
-        <div className="flex items-center">
-          <ThemeToggle />
-          {open && <span className="ml-4 text-white">Light Mode</span>}
-        </div>
-      </div>
-    </nav>
+      </nav>
+      <div
+        className={`flex-1 transition-all duration-300 ease-in-out ${
+          open ? "ml-80" : "ml-20"
+        } h-full`}
+      >
+        {children}
+      </div>{" "}
+    </div>
   );
 };
 

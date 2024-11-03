@@ -26,10 +26,11 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Theme>
-          <Navbar />
-          <main className="pl-24 pr-10 py-10 h-full max-w-full overflow-x-hidden">
-            {children}
-          </main>
+          <Navbar>
+            <main className="pl-24 pr-10 py-14 h-full w-full overflow-x-hidden">
+              {children}
+            </main>
+          </Navbar>
         </Theme>
       </body>
     </html>

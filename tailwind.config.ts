@@ -14,6 +14,7 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        backgroundLogin: "hsl(var(--background-login))",
         backgroundDetail: "hsl(var(--background-detail))",
         link: "hsl(var(--link))",
         navbar: {
