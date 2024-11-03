@@ -1,7 +1,12 @@
+import AnaliticsPage from "@/components/analytics";
 import React from "react";
 
 const Analitics = () => {
-  return <div>Analitics</div>;
+  return (
+    <section>
+      <AnaliticsPage />
+    </section>
+  );
 };
 
 export default Analitics;
