@@ -15,12 +15,147 @@ datasource db {
 }
 
 model User {
-  id        String    @id
-  name      String
-  email     String    @unique
-  password  String
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  username      String    @unique
+  birthday      DateTime?
+  gender        String?
+  phone_number  String?   @unique
+  instagram_url String?
+  x_url         String?
+  img_url       String?
+  bio           String?
+  cpf           String?   @unique
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  last_login    DateTime?
+  is_active     Boolean   @default(true)
 
-  @@map("users")
+  companies     UserCompany[]
+  notifications Notification[]
+}
+
+model Company {
+  id            String   @id @default(cuid())
+  name          String
+  cnpj          String   @unique
+  instagram_url String?
+  x_url         String?
+  website_url   String?
+  industry      String?
+  location      String?
+  img_url       String?
+  bio           String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  is_active     Boolean  @default(true)
+
+  collaborators UserCompany[]
+
+  posts                 Post[]
+  engagements           Engagement[]
+  sentiments_by_network SentimentByNetwork[]
+  sentiments_by_post    SentimentByPost[]
+  sentiment_trends      SentimentTrend[]
+}
+
+model UserCompany {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  isAdmin   Boolean @default(false)
+
+  @@unique([userId, companyId])
+}
+
+model Post {
+  id               String   @id @default(cuid())
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId        String
+  network          String
+  post_url         String   @unique
+  content          String?
+  created_at       DateTime @default(now())
+  engagement_score Int?
+  sentiment_score  Int?
+  is_active        Boolean  @default(true)
+
+  audience_by_network AudienceByNetwork[]
+  engagements         Engagement[]
+  sentiments_by_post  SentimentByPost[]
+}
+
+model Engagement {
+  id                     String   @id @default(cuid())
+  company                Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId              String
+  post                   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId                 String
+  improvement_percentage Int?
+  total_reactions        Int?
+  period                 String?
+  created_at             DateTime @default(now())
+}
+
+model AudienceByNetwork {
+  id                String   @id @default(cuid())
+  post              Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId            String
+  network           String
+  average_reactions Int?
+  reach             Int?
+  impressions       Int?
+  created_at        DateTime @default(now())
+}
+
+model SentimentByNetwork {
+  id             String   @id @default(cuid())
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  network        String
+  positive       Int?
+  negative       Int?
+  neutral        Int?
+  total_mentions Int?
+  created_at     DateTime @default(now())
+}
+
+model SentimentByPost {
+  id             String   @id @default(cuid())
+  post           Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId         String
+  network        String
+  positive       Int?
+  negative       Int?
+  neutral        Int?
+  total_comments Int?
+  created_at     DateTime @default(now())
+  Company        Company  @relation(fields: [companyId], references: [id])
+  companyId      String
+}
+
+model SentimentTrend {
+  id          String   @id @default(cuid())
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId   String
+  date        DateTime
+  network     String
+  positive    Int?
+  negative    Int?
+  neutral     Int?
+  trend_score Int?
+  created_at  DateTime @default(now())
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  message    String
+  is_read    Boolean  @default(false)
+  created_at DateTime @default(now())
 }

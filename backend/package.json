@@ -18,7 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:int": "jest -i --no-cache --config jest-int.json"
+    "test:int": "jest -i --no-cache --config jest-int.json",
+    "seed": "ts-node prisma/seed/seed.ts",
+    "reset-db": "prisma migrate reset --force --skip-seed && ts-node prisma/seed/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
