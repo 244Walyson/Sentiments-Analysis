@@ -12,7 +12,7 @@ export class User {
   imgUrl: string;
   bio: string;
   cpf: string;
-  last_login: Date;
+  lastLogin: Date;
   isActive: boolean;
 
   createdAt: Date = new Date();
@@ -34,7 +34,7 @@ export class User {
     imgUrl?: string;
     bio?: string;
     cpf?: string;
-    last_login?: Date;
+    lastLogin?: Date;
     isActive?: boolean;
   }) {
     this.id = props.id ?? crypto.randomUUID();

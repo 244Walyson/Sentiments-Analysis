@@ -9,7 +9,7 @@ async function main() {
       email: "admin@example.com",
       password: "securepassword", // Lembre-se de hash as senhas em produção
       username: "admin_user",
-      is_active: true,
+      isActive: true,
     },
   });
 
@@ -19,7 +19,7 @@ async function main() {
       email: "user@example.com",
       password: "securepassword",
       username: "regular_user",
-      is_active: true,
+      isActive: true,
     },
   });
 
@@ -48,9 +48,9 @@ async function main() {
     data: {
       companyId: company.id,
       network: "Instagram",
-      post_url: "https://instagram.com/example-post",
+      postUrl: "https://instagram.com/example-post",
       content: "Hello World!",
-      is_active: true,
+      isActive: true,
     },
   });
 

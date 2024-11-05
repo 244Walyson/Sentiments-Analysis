@@ -35,11 +35,12 @@ describe("UserController", () => {
 
   describe("create", () => {
     it("should create a user without returning the password", async () => {
-      const createUserDto: CreateUserDto = {
+      const createUserDto = new CreateUserDto({
         name: "John Doe",
         email: "new@gmail.com",
         password: "123456",
-      };
+        username: "john_doe",
+      });
 
       // Simulando o retorno esperado de UserService sem a propriedade password
       mockUserUseCase.execute.mockResolvedValue(

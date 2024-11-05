@@ -29,11 +29,12 @@ describe("UserService", () => {
 
   describe("create", () => {
     it("should create a user and return a ResponseUserDto", async () => {
-      const createUserDto: CreateUserDto = {
+      const createUserDto = new CreateUserDto({
         name: "John Doe",
         email: "new@gmail.com",
         password: "123456",
-      };
+        username: "john_doe",
+      });
       const createdUser = { id: "1", ...createUserDto };
       mockUserRepository.create.mockResolvedValue(createdUser);
 
