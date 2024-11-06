@@ -12,8 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateUserDto {
-    constructor(props) {
-        Object.assign(this, props);
+    constructor(props = {}) {
+        Object.entries(props).forEach(([key, value]) => {
+            this[key] = value ?? null;
+        });
     }
 }
 exports.CreateUserDto = CreateUserDto;

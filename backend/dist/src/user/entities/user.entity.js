@@ -6,7 +6,9 @@ class User {
         this.createdAt = new Date();
         this.updatedAt = new Date();
         this.id = props.id ?? crypto.randomUUID();
-        Object.assign(this, props);
+        Object.entries(props).forEach(([key, value]) => {
+            this[key] = value ?? null;
+        });
     }
 }
 exports.User = User;

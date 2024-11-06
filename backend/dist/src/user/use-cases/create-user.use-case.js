@@ -17,32 +17,38 @@ const common_1 = require("@nestjs/common");
 const user_entity_1 = require("../entities/user.entity");
 const response_user_dto_1 = require("../dto/response-user.dto");
 const bcrypt = require("bcryptjs");
+const custom_exception_1 = require("../../exceptions/custom.exception");
 let CreateUserUseCase = class CreateUserUseCase {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
     async execute(createUserDto) {
-        const password = await bcrypt.hash(createUserDto.password, 10);
-        const user = new user_entity_1.User({
-            name: createUserDto.name,
-            email: createUserDto.email,
-            password: password,
-            username: createUserDto.username,
-            birthday: createUserDto.birthday,
-            gender: createUserDto.gender,
-            phoneNumber: createUserDto.phoneNumber,
-            instagramUrl: createUserDto.instagramUrl,
-            xUrl: createUserDto.xUrl,
-            imgUrl: createUserDto.xUrl,
-            bio: createUserDto.imgUrl,
-            cpf: createUserDto.cpf,
-        });
-        console.log(user);
-        const createdUser = await this.userRepository.create(user);
-        const { password: _, ...userResponse } = createdUser;
-        return new response_user_dto_1.ResponseUserDto({
-            ...userResponse,
-        });
+        try {
+            const password = await bcrypt.hash(createUserDto.password, 10);
+            const user = new user_entity_1.User({
+                name: createUserDto.name,
+                email: createUserDto.email,
+                password: password,
+                username: createUserDto.username,
+                birthday: createUserDto.birthday,
+                gender: createUserDto.gender,
+                phoneNumber: createUserDto.phoneNumber,
+                instagramUrl: createUserDto.instagramUrl,
+                xUrl: createUserDto.xUrl,
+                imgUrl: createUserDto.xUrl,
+                bio: createUserDto.imgUrl,
+                cpf: createUserDto.cpf,
+            });
+            console.log(user);
+            const createdUser = await this.userRepository.create(user);
+            const { password: _, ...userResponse } = createdUser;
+            return new response_user_dto_1.ResponseUserDto({
+                ...userResponse,
+            });
+        }
+        catch (error) {
+            throw new custom_exception_1.CustomException("Error creating user", error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.CreateUserUseCase = CreateUserUseCase;

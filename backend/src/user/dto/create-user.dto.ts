@@ -59,20 +59,9 @@ export class CreateUserDto {
   @IsString({ message: "CPF must be a string" })
   cpf: string;
 
-  constructor(props: {
-    name?: string;
-    email?: string;
-    username?: string;
-    password?: string;
-    birthday?: Date;
-    gender?: string;
-    phoneNumber?: string;
-    instagramUrl?: string;
-    xUrl?: string;
-    imgUrl?: string;
-    bio?: string;
-    cpf?: string;
-  }) {
-    Object.assign(this, props);
+  constructor(props: Partial<CreateUserDto> = {}) {
+    Object.entries(props).forEach(([key, value]) => {
+      this[key] = value ?? null;
+    });
   }
 }
