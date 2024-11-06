@@ -5,9 +5,8 @@ const common_1 = require("@nestjs/common");
 class CustomException extends common_1.HttpException {
     constructor(error, message, status = common_1.HttpStatus.BAD_REQUEST) {
         super({
-            statusCode: status,
-            message: Array.isArray(message) ? message : [message],
-            error: error,
+            error,
+            message,
         }, status);
     }
 }

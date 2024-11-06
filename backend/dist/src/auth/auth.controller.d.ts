@@ -6,6 +6,6 @@ export declare class AuthController {
     private readonly createAccessTokenUseCase;
     private readonly refreshTokenUseCase;
     constructor(createAccessTokenUseCase: CreateAccessTokenUseCase, refreshTokenUseCase: RefreshTokenUseCase);
-    create(credentials: CredentialsDto): Promise<import("./dto/access-token.dto").AccessTokenDto | import("@nestjs/common").UnauthorizedException>;
+    create(credentials: CredentialsDto): Promise<import("./dto/access-token.dto").AccessTokenDto>;
     refreshToken(refreshToken: RefreshTokenDto): Promise<import("./dto/access-token.dto").AccessTokenDto>;
 }

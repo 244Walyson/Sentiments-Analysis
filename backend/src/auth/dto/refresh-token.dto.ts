@@ -1,7 +1,10 @@
+import { IsNotEmpty } from "class-validator";
+
 export class RefreshTokenDto {
+  @IsNotEmpty()
   refresh_token: string;
 
-  constructor({ refresh_token }) {
-    this.refresh_token = refresh_token;
+  constructor(partial: Partial<RefreshTokenDto>) {
+    Object.assign(this, partial);
   }
 }

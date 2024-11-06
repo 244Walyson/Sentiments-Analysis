@@ -9,37 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRepositoryImpl = void 0;
+exports.RefreshTokenRepositoryImpl = void 0;
 const prisma_service_1 = require("../../prisma.service");
 const common_1 = require("@nestjs/common");
-let UserRepositoryImpl = class UserRepositoryImpl {
+let RefreshTokenRepositoryImpl = class RefreshTokenRepositoryImpl {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async findByEmail(email) {
-        return await this.prisma.user.findUnique({ where: { email } });
+    async create(refreshToken) {
+        return await this.prisma.refreshToken.create({ data: refreshToken });
     }
-    async create(data) {
-        return await this.prisma.user.create({ data });
-    }
-    async findAllByCompanyId(companyId) {
-        return await this.prisma.user.findMany({
-            where: { id: companyId },
+    async revoke(id) {
+        return await this.prisma.refreshToken.update({
+            where: { id },
+            data: { revoked: true },
         });
     }
-    async findOne(id) {
-        return await this.prisma.user.findUnique({ where: { id } });
+    async findOne(refreshToken) {
+        return await this.prisma.refreshToken.findFirst({
+            where: { refreshToken },
+        });
     }
-    async update(id, data) {
-        return await this.prisma.user.update({ where: { id }, data });
-    }
-    async delete(id) {
-        await this.prisma.user.delete({ where: { id } });
+    async revokeAll(userId) {
+        return await this.prisma.refreshToken.updateMany({
+            where: { userId },
+            data: { revoked: true },
+        });
     }
 };
-exports.UserRepositoryImpl = UserRepositoryImpl;
-exports.UserRepositoryImpl = UserRepositoryImpl = __decorate([
+exports.RefreshTokenRepositoryImpl = RefreshTokenRepositoryImpl;
+exports.RefreshTokenRepositoryImpl = RefreshTokenRepositoryImpl = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], UserRepositoryImpl);
-//# sourceMappingURL=user.repository.impl.js.map
+], RefreshTokenRepositoryImpl);
+//# sourceMappingURL=refresh-token.repository.impl.js.map

@@ -8,22 +8,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RefreshTokenUseCase = void 0;
-const access_token_dto_1 = require("../dto/access-token.dto");
 const common_1 = require("@nestjs/common");
-const find_user_by_email_use_case_1 = require("../../user/use-cases/find-user-by-email.use-case");
+const create_access_token_use_case_1 = require("./create-access-token.use-case");
+const custom_exception_1 = require("../../exceptions/custom.exception");
 let RefreshTokenUseCase = class RefreshTokenUseCase {
-    constructor(findByRefreshTokenUseCase) {
-        this.findByRefreshTokenUseCase = findByRefreshTokenUseCase;
+    constructor(refreshTokenRepository, createAccessToken) {
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.createAccessToken = createAccessToken;
     }
     async execute(refreshToken) {
-        return new access_token_dto_1.AccessTokenDto({});
+        const refresh_token = refreshToken.refresh_token;
+        const refreshTokenRec = await this.refreshTokenRepository.findOne(refresh_token);
+        if (!refreshTokenRec) {
+            throw new custom_exception_1.CustomException("Unauthorized", "Invalid refresh token", common_1.HttpStatus.UNAUTHORIZED);
+        }
+        if (refreshTokenRec.revoked) {
+            this.refreshTokenRepository.revokeAll(refreshTokenRec.userId);
+            throw new custom_exception_1.CustomException("Unauthorized", "Invalid refresh token", common_1.HttpStatus.UNAUTHORIZED);
+        }
+        await this.refreshTokenRepository.revoke(refreshTokenRec.id);
+        const { email } = refreshTokenRec;
+        return await this.createAccessToken.execute({ email, password: undefined }, false);
     }
 };
 exports.RefreshTokenUseCase = RefreshTokenUseCase;
 exports.RefreshTokenUseCase = RefreshTokenUseCase = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [find_user_by_email_use_case_1.FindUserByEmailUseCase])
+    __param(0, (0, common_1.Inject)("RefreshTokenRepositoryInterface")),
+    __metadata("design:paramtypes", [Object, create_access_token_use_case_1.CreateAccessTokenUseCase])
 ], RefreshTokenUseCase);
 //# sourceMappingURL=refresh-token.use-case.js.map

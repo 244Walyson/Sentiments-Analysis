@@ -13,27 +13,29 @@ exports.CreateAccessTokenUseCase = void 0;
 const common_1 = require("@nestjs/common");
 const bcrypt = require("bcryptjs");
 const jwt_1 = require("@nestjs/jwt");
-const crypto = require("crypto");
 const access_token_dto_1 = require("../dto/access-token.dto");
 const constants_1 = require("../constants");
 const find_user_by_email_use_case_1 = require("../../user/use-cases/find-user-by-email.use-case");
+const create_refresh_token_use_case_1 = require("./create-refresh-token.use-case");
 let CreateAccessTokenUseCase = class CreateAccessTokenUseCase {
-    constructor(findUserByEmail, jwt) {
+    constructor(findUserByEmail, jwt, createRefreshTokenUseCase) {
         this.findUserByEmail = findUserByEmail;
         this.jwt = jwt;
+        this.createRefreshTokenUseCase = createRefreshTokenUseCase;
     }
-    async execute(credentials) {
+    async execute(credentials, withPassword = true) {
         const { email, password } = credentials;
-        console.log("credentials");
-        console.log(credentials);
         const user = await this.findUserByEmail.executeWithPassword(email);
-        if (await !bcrypt.compare(password, user.password)) {
-            return new common_1.UnauthorizedException("Invalid credentials");
+        if (withPassword && !bcrypt.compareSync(password, user.password)) {
+            throw new common_1.UnauthorizedException("Invalid credentials");
         }
         const payload = { sub: user.id, email: user.username };
         const access_token = await this.jwt.signAsync(payload);
-        const refresh_token = crypto.randomBytes(32).toString("hex");
         const expires_in = constants_1.jwtConstants.expiresIn;
+        const { refresh_token } = await this.createRefreshTokenUseCase.execute({
+            userId: user.id,
+            email: user.email,
+        });
         return new access_token_dto_1.AccessTokenDto({
             access_token,
             token_type: "Bearer",
@@ -46,6 +48,7 @@ exports.CreateAccessTokenUseCase = CreateAccessTokenUseCase;
 exports.CreateAccessTokenUseCase = CreateAccessTokenUseCase = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [find_user_by_email_use_case_1.FindUserByEmailUseCase,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        create_refresh_token_use_case_1.CreateRefreshTokenUseCase])
 ], CreateAccessTokenUseCase);
 //# sourceMappingURL=create-access-token.use-case.js.map

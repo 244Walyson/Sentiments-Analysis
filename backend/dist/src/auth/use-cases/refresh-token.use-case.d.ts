@@ -1,8 +1,9 @@
 import { RefreshTokenDto } from "../dto/refresh-token.dto";
-import { AccessTokenDto } from "../dto/access-token.dto";
-import { FindUserByEmailUseCase } from "src/user/use-cases/find-user-by-email.use-case";
+import { RefreshTokenRepositoryInterface } from "../repositories/refresh-token.repository.interface";
+import { CreateAccessTokenUseCase } from "./create-access-token.use-case";
 export declare class RefreshTokenUseCase {
-    private readonly findByRefreshTokenUseCase;
-    constructor(findByRefreshTokenUseCase: FindUserByEmailUseCase);
-    execute(refreshToken: RefreshTokenDto): Promise<AccessTokenDto>;
+    private readonly refreshTokenRepository;
+    private readonly createAccessToken;
+    constructor(refreshTokenRepository: RefreshTokenRepositoryInterface, createAccessToken: CreateAccessTokenUseCase);
+    execute(refreshToken: RefreshTokenDto): Promise<import("../dto/access-token.dto").AccessTokenDto>;
 }

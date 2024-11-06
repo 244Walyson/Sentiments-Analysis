@@ -10,12 +10,12 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_controller_1 = require("./user.controller");
 const user_repository_impl_1 = require("./repository/user.repository.impl");
-const prisma_service_1 = require("..//prisma.service");
 const create_user_use_case_1 = require("./use-cases/create-user.use-case");
 const update_user_use_case_1 = require("./use-cases/update-user.use-case");
 const find_user_use_case_1 = require("./use-cases/find-user.use-case");
 const delete_user_use_case_1 = require("./use-cases/delete-user.use-case");
 const find_user_by_email_use_case_1 = require("./use-cases/find-user-by-email.use-case");
+const prisma_service_1 = require("../prisma.service");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;

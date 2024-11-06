@@ -109,3 +109,15 @@ create table notifications (
     is_read boolean default false,
     created_at timestamp not null default current_timestamp
 );
+
+CREATE TABLE refresh_tokens (
+    id SERIAL PRIMARY KEY,
+    user_id UUID NOT NULL,
+    refresh_token TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    revoked BOOLEAN DEFAULT FALSE,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

@@ -13,11 +13,14 @@ let HttpExceptionFilter = class HttpExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-        const status = exception.getStatus();
+        const status = exception.getStatus
+            ? exception.getStatus()
+            : common_1.HttpStatus.INTERNAL_SERVER_ERROR;
         const exceptionResponse = exception.getResponse();
         const errorResponse = typeof exceptionResponse === "object" && exceptionResponse !== null
-            ? exceptionResponse
+            ? { ...exceptionResponse }
             : { message: exception.message };
+        console.log("Exception Response:", exceptionResponse);
         response.status(status).json({
             statusCode: status,
             timestamp: new Date().toISOString(),

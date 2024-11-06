@@ -12,6 +12,8 @@ const app_controller_1 = require("./app.controller");
 const user_module_1 = require("./user/user.module");
 const prisma_service_1 = require("./prisma.service");
 const auth_module_1 = require("./auth/auth.module");
+const core_1 = require("@nestjs/core");
+const http_exception_filter_1 = require("./exceptions/http-exception.filter");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -19,7 +21,13 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [user_module_1.UserModule, auth_module_1.AuthModule],
         controllers: [app_controller_1.AppController],
-        providers: [prisma_service_1.PrismaService],
+        providers: [
+            prisma_service_1.PrismaService,
+            {
+                provide: core_1.APP_FILTER,
+                useClass: http_exception_filter_1.HttpExceptionFilter,
+            },
+        ],
         exports: [prisma_service_1.PrismaService],
     })
 ], AppModule);

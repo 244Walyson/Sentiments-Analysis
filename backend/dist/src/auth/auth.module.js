@@ -14,6 +14,9 @@ const constants_1 = require("./constants");
 const user_module_1 = require("../user/user.module");
 const create_access_token_use_case_1 = require("./use-cases/create-access-token.use-case");
 const refresh_token_use_case_1 = require("./use-cases/refresh-token.use-case");
+const refresh_token_repository_impl_1 = require("./repositories/refresh-token.repository.impl");
+const create_refresh_token_use_case_1 = require("./use-cases/create-refresh-token.use-case");
+const prisma_service_1 = require("../prisma.service");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -27,7 +30,16 @@ exports.AuthModule = AuthModule = __decorate([
                 signOptions: { expiresIn: constants_1.jwtConstants.expiresIn },
             }),
         ],
-        providers: [create_access_token_use_case_1.CreateAccessTokenUseCase, refresh_token_use_case_1.RefreshTokenUseCase],
+        providers: [
+            create_access_token_use_case_1.CreateAccessTokenUseCase,
+            refresh_token_use_case_1.RefreshTokenUseCase,
+            create_refresh_token_use_case_1.CreateRefreshTokenUseCase,
+            prisma_service_1.PrismaService,
+            {
+                provide: "RefreshTokenRepositoryInterface",
+                useClass: refresh_token_repository_impl_1.RefreshTokenRepositoryImpl,
+            },
+        ],
         controllers: [auth_controller_1.AuthController],
         exports: [create_access_token_use_case_1.CreateAccessTokenUseCase, refresh_token_use_case_1.RefreshTokenUseCase],
     })
