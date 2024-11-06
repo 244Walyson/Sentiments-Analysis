@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 export declare class UserRepositoryImpl implements UserRepositoryInterface {
     private readonly prisma;
     constructor(prisma: PrismaService);
+    findByEmail(email: string): Promise<User>;
     create(data: Prisma.UserCreateInput): Promise<User>;
     findAllByCompanyId(companyId: string): Promise<User[]>;
     findOne(id: string): Promise<User>;

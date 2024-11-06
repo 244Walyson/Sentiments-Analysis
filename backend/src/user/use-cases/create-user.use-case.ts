@@ -4,7 +4,7 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { User } from "../entities/user.entity";
 import { ResponseUserDto } from "../dto/response-user.dto";
 import * as bcrypt from "bcryptjs";
-import { CustomException } from "src/exceptions/custom.exception";
+import { CustomException } from "../../exceptions/custom.exception";
 
 @Injectable()
 export class CreateUserUseCase {

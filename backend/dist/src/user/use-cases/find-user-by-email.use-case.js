@@ -12,29 +12,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindUserUseCase = void 0;
+exports.FindUserByEmailUseCase = void 0;
 const common_1 = require("@nestjs/common");
 const response_user_dto_1 = require("../dto/response-user.dto");
-let FindUserUseCase = class FindUserUseCase {
+let FindUserByEmailUseCase = class FindUserByEmailUseCase {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
     async execute(id) {
-        try {
-            const { password: _, ...user } = await this.userRepository.findOne(id);
-            return new response_user_dto_1.ResponseUserDto({
-                ...user,
-            });
-        }
-        catch (error) {
+        const user = await this.userRepository.findByEmail(id);
+        if (!user) {
             throw new common_1.NotFoundException("User not found");
         }
+        const { password: _, ...userResponse } = user;
+        return new response_user_dto_1.ResponseUserDto(userResponse);
+    }
+    async executeWithPassword(email, includePassword = false) {
+        const user = await this.userRepository.findByEmail(email);
+        if (!user) {
+            throw new common_1.NotFoundException("User not found");
+        }
+        return user;
     }
 };
-exports.FindUserUseCase = FindUserUseCase;
-exports.FindUserUseCase = FindUserUseCase = __decorate([
+exports.FindUserByEmailUseCase = FindUserByEmailUseCase;
+exports.FindUserByEmailUseCase = FindUserByEmailUseCase = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)("UserRepositoryInterface")),
     __metadata("design:paramtypes", [Object])
-], FindUserUseCase);
-//# sourceMappingURL=find-user.use-case.js.map
+], FindUserByEmailUseCase);
+//# sourceMappingURL=find-user-by-email.use-case.js.map

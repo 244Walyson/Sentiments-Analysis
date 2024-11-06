@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { UserRepositoryInterface } from "../repository/user.repository.interface";
 import { ResponseUserDto } from "../dto/response-user.dto";
 
@@ -10,11 +10,13 @@ export class FindUserUseCase {
   ) {}
 
   async execute(id: string) {
-    const user = await this.userRepository.findOne(id);
-    return new ResponseUserDto({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    });
+    try {
+      const { password: _, ...user } = await this.userRepository.findOne(id);
+      return new ResponseUserDto({
+        ...user,
+      });
+    } catch (error) {
+      throw new NotFoundException("User not found");
+    }
   }
 }

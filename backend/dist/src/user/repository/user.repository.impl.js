@@ -16,6 +16,9 @@ let UserRepositoryImpl = class UserRepositoryImpl {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    findByEmail(email) {
+        return this.prisma.user.findUnique({ where: { email } });
+    }
     async create(data) {
         return await this.prisma.user.create({ data });
     }

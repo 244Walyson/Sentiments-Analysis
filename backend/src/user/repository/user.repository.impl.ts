@@ -8,6 +8,10 @@ import { Prisma } from "@prisma/client";
 export class UserRepositoryImpl implements UserRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
+  findByEmail(email: string): Promise<User> {
+    return this.prisma.user.findUnique({ where: { email } });
+  }
+
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.user.create({ data });
   }

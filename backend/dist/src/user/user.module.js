@@ -15,6 +15,7 @@ const create_user_use_case_1 = require("./use-cases/create-user.use-case");
 const update_user_use_case_1 = require("./use-cases/update-user.use-case");
 const find_user_use_case_1 = require("./use-cases/find-user.use-case");
 const delete_user_use_case_1 = require("./use-cases/delete-user.use-case");
+const find_user_by_email_use_case_1 = require("./use-cases/find-user-by-email.use-case");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
@@ -27,11 +28,13 @@ exports.UserModule = UserModule = __decorate([
             find_user_use_case_1.FindUserUseCase,
             delete_user_use_case_1.DeleteUserUseCase,
             prisma_service_1.PrismaService,
+            find_user_by_email_use_case_1.FindUserByEmailUseCase,
             {
                 provide: "UserRepositoryInterface",
                 useClass: user_repository_impl_1.UserRepositoryImpl,
             },
         ],
+        exports: [find_user_by_email_use_case_1.FindUserByEmailUseCase],
     })
 ], UserModule);
 //# sourceMappingURL=user.module.js.map

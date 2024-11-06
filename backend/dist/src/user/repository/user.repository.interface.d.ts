@@ -5,4 +5,5 @@ export interface UserRepositoryInterface {
     findOne: (id: string) => Promise<User>;
     update: (id: string, data: any) => Promise<User>;
     delete: (id: string) => Promise<void>;
+    findByEmail: (email: string) => Promise<User>;
 }
