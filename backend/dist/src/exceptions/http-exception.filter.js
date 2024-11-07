@@ -22,7 +22,7 @@ let HttpExceptionFilter = class HttpExceptionFilter {
             : { message: exception.message };
         console.log("Exception Response:", exceptionResponse);
         response.status(status).json({
-            statusCode: status,
+            status: status,
             timestamp: new Date().toISOString(),
             path: request.url,
             ...errorResponse,

@@ -14,12 +14,27 @@ const prisma_service_1 = require("./prisma.service");
 const auth_module_1 = require("./auth/auth.module");
 const core_1 = require("@nestjs/core");
 const http_exception_filter_1 = require("./exceptions/http-exception.filter");
+const post_module_1 = require("./post/post.module");
+const engagement_module_1 = require("./engagement/engagement.module");
+const audience_module_1 = require("./audience/audience.module");
+const sentiment_module_1 = require("./sentiment/sentiment.module");
+const rabbit_mq_module_1 = require("./rabbit-mq/rabbit-mq.module");
+const company_module_1 = require("./company/company.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule, auth_module_1.AuthModule],
+        imports: [
+            user_module_1.UserModule,
+            auth_module_1.AuthModule,
+            post_module_1.PostModule,
+            engagement_module_1.EngagementModule,
+            audience_module_1.AudienceModule,
+            sentiment_module_1.SentimentModule,
+            rabbit_mq_module_1.RabbitMqModule,
+            company_module_1.CompanyModule,
+        ],
         controllers: [app_controller_1.AppController],
         providers: [
             prisma_service_1.PrismaService,

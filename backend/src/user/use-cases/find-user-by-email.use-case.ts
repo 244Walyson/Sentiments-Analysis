@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ResponseUserDto } from "../dto/response-user.dto";
-import { UserRepositoryInterface } from "../repository/user.repository.interface";
+import { UserRepositoryInterface } from "../repositories/user.repository.interface";
 
 @Injectable()
 export class FindUserByEmailUseCase {

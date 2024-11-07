@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_controller_1 = require("./user.controller");
-const user_repository_impl_1 = require("./repository/user.repository.impl");
+const user_repository_impl_1 = require("./repositories/user.repository.impl");
 const create_user_use_case_1 = require("./use-cases/create-user.use-case");
 const update_user_use_case_1 = require("./use-cases/update-user.use-case");
 const find_user_use_case_1 = require("./use-cases/find-user.use-case");

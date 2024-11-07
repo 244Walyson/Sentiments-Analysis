@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 import { PrismaService } from "../prisma.service";
-import { UserRepositoryInterface } from "./repository/user.repository.interface";
+import { UserRepositoryInterface } from "./repositories/user.repository.interface";
 import { UserModule } from "./user.module";
 
 describe("UserController (integration)", () => {

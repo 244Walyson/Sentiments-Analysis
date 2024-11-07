@@ -36,10 +36,12 @@ create table companies (
     is_active boolean default true
 );
 
+CREATE TYPE NetworkType AS ENUM('Twitter', 'Instagram');
+
 create table posts (
     id bigint primary key generated always as identity,
     company_id bigint references companies (id) on delete cascade,
-    network text not null,
+    network NetworkType NOT NULL,
     post_url text unique,
     content text,
     created_at timestamp not null default current_timestamp,
@@ -47,6 +49,27 @@ create table posts (
     sentiment_score int,
     is_active boolean default true
 );
+
+create table comments (
+    id VARCHAR(255) PRIMARY KEY,
+    postId VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (postId) REFERENCES posts (id) ON DELETE CASCADE
+);
+
+create table sentiment (
+    id bigint primary key generated always as identity,
+    comment_id bigint references comments (id) on delete cascade,
+    polarity int,
+    confidence float,
+    probabilities jsonb,
+    class_predicted int,
+    logits jsonb,
+    num_tokens int,
+    inference_time float,
+    created_at timestamp not null default current_timestamp
+)
 
 create table engagement (
     id bigint primary key generated always as identity,
@@ -119,5 +142,5 @@ CREATE TABLE refresh_tokens (
     revoked BOOLEAN DEFAULT FALSE,
     ip_address VARCHAR(45),
     user_agent TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );

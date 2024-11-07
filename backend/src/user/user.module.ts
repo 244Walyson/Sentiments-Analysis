@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { UserController } from "./user.controller";
-import { UserRepositoryImpl } from "./repository/user.repository.impl";
+import { UserRepositoryImpl } from "./repositories/user.repository.impl";
 import { CreateUserUseCase } from "./use-cases/create-user.use-case";
 import { UpdateUserUseCase } from "./use-cases/update-user.use-case";
 import { FindUserUseCase } from "./use-cases/find-user.use-case";

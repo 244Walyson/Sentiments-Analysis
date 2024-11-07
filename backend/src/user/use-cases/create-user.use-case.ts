@@ -1,5 +1,5 @@
 import { HttpStatus, Inject, Injectable } from "@nestjs/common";
-import { UserRepositoryInterface } from "../repository/user.repository.interface";
+import { UserRepositoryInterface } from "../repositories/user.repository.interface";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { User } from "../entities/user.entity";
 import { ResponseUserDto } from "../dto/response-user.dto";

@@ -5,9 +5,24 @@ import { PrismaService } from "./prisma.service";
 import { AuthModule } from "./auth/auth.module";
 import { APP_FILTER } from "@nestjs/core";
 import { HttpExceptionFilter } from "./exceptions/http-exception.filter";
+import { PostModule } from "./post/post.module";
+import { EngagementModule } from "./engagement/engagement.module";
+import { AudienceModule } from "./audience/audience.module";
+import { SentimentModule } from './sentiment/sentiment.module';
+import { RabbitMqModule } from './rabbit-mq/rabbit-mq.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
-  imports: [UserModule, AuthModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    PostModule,
+    EngagementModule,
+    AudienceModule,
+    SentimentModule,
+    RabbitMqModule,
+    CompanyModule,
+  ],
   controllers: [AppController],
   providers: [
     PrismaService,

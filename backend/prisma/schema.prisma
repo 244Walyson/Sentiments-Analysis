@@ -75,6 +75,7 @@ model UserCompany {
 
 model Post {
   id              String   @id @default(cuid())
+  postId          String   @unique
   company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId       String
   network         String
@@ -88,6 +89,16 @@ model Post {
   audienceByNetwork AudienceByNetwork[]
   engagements       Engagement[]
   sentimentsByPost  SentimentByPost[]
+  Comment           Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  commentId String   @unique
+  content   String
+  createdAt DateTime @default(now())
 }
 
 model Engagement {

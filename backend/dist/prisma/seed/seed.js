@@ -41,6 +41,7 @@ async function main() {
     });
     await prisma.post.create({
         data: {
+            postId: "n2d12",
             companyId: company.id,
             network: "Instagram",
             postUrl: "https://instagram.com/example-post",

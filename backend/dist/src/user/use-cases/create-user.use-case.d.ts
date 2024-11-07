@@ -1,4 +1,4 @@
-import { UserRepositoryInterface } from "../repository/user.repository.interface";
+import { UserRepositoryInterface } from "../repositories/user.repository.interface";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { ResponseUserDto } from "../dto/response-user.dto";
 export declare class CreateUserUseCase {
