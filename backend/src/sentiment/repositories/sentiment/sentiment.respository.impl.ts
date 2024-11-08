@@ -1,4 +1,4 @@
-import { PrismaService } from "src/prisma.service";
+import { PrismaService } from "../../../prisma.service";
 import { SentimentRepositoryInterface } from "./sentiment.repository.interface";
 
 export class SentimentRepositoryImpl implements SentimentRepositoryInterface {

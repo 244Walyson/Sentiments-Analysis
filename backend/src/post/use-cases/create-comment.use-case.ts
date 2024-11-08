@@ -6,6 +6,7 @@ import { FindPostUseCase } from "./find-post.use-case";
 import { RabbitMQService } from "src/rabbit-mq/rabbit-mq.service";
 import { Inject, Injectable } from "@nestjs/common";
 import { Comment } from "../entities/comment.entity";
+import { MessageQueue } from "src/interfaces/message-queue.interface";
 
 @Injectable()
 export class CreateCommentUseCase {
@@ -13,7 +14,8 @@ export class CreateCommentUseCase {
     @Inject("CommentRepositoryInterface")
     private commentRepository: CommentRepositoryInterface,
     private findPostUseCase: FindPostUseCase,
-    private rabbitMqService: RabbitMQService
+    @Inject("MessageQueue")
+    private rabbitMqService: MessageQueue
   ) {}
 
   async execute(data: CreateCommentDto): Promise<ResponseCommentDto> {

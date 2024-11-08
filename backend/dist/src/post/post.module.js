@@ -13,9 +13,9 @@ const rabbit_mq_service_1 = require("../rabbit-mq/rabbit-mq.service");
 const create_post_use_case_1 = require("./use-cases/create-post.use-case");
 const create_comment_use_case_1 = require("./use-cases/create-comment.use-case");
 const find_post_use_case_1 = require("./use-cases/find-post.use-case");
-const post_repository_impl_1 = require("./repositories/post.repository.impl");
 const comment_repository_impl_1 = require("./repositories/comment-repository.impl");
 const prisma_service_1 = require("../prisma.service");
+const post_repository_impl_1 = require("./repositories/post.repository.impl");
 let PostModule = class PostModule {
 };
 exports.PostModule = PostModule;
@@ -23,7 +23,6 @@ exports.PostModule = PostModule = __decorate([
     (0, common_1.Module)({
         controllers: [post_controller_1.PostController],
         providers: [
-            rabbit_mq_service_1.RabbitMQService,
             create_post_use_case_1.CreatePostUseCase,
             create_comment_use_case_1.CreateCommentUseCase,
             find_post_use_case_1.FindPostUseCase,
@@ -36,7 +35,12 @@ exports.PostModule = PostModule = __decorate([
                 provide: "CommentRepositoryInterface",
                 useClass: comment_repository_impl_1.CommentRepositoryImpl,
             },
+            {
+                provide: "MessageQueue",
+                useClass: rabbit_mq_service_1.RabbitMQService,
+            },
         ],
+        exports: [find_post_use_case_1.FindPostUseCase],
     })
 ], PostModule);
 //# sourceMappingURL=post.module.js.map

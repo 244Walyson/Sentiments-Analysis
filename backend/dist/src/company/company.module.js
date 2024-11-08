@@ -24,6 +24,7 @@ exports.CompanyModule = CompanyModule = __decorate([
                 useClass: company_repository_impl_1.CompanyRepositoryImpl,
             },
         ],
+        exports: [find_company_use_case_1.FindCompanyUseCase],
     })
 ], CompanyModule);
 //# sourceMappingURL=company.module.js.map

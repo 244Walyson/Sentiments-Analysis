@@ -1,4 +1,4 @@
-import { PrismaService } from "src/prisma.service";
+import { PrismaService } from "../../prisma.service";
 import { PostRepositoryInterface } from "./post.repository.interface";
 export declare class PostRepositoryImpl implements PostRepositoryInterface {
     private readonly prismaService;

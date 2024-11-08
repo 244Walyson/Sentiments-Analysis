@@ -16,7 +16,6 @@ exports.CreateCommentUseCase = void 0;
 const custom_exception_1 = require("../../exceptions/custom.exception");
 const response_comment_dto_1 = require("../dto/response-comment.dto");
 const find_post_use_case_1 = require("./find-post.use-case");
-const rabbit_mq_service_1 = require("../../rabbit-mq/rabbit-mq.service");
 const common_1 = require("@nestjs/common");
 const comment_entity_1 = require("../entities/comment.entity");
 let CreateCommentUseCase = class CreateCommentUseCase {
@@ -47,7 +46,7 @@ exports.CreateCommentUseCase = CreateCommentUseCase;
 exports.CreateCommentUseCase = CreateCommentUseCase = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)("CommentRepositoryInterface")),
-    __metadata("design:paramtypes", [Object, find_post_use_case_1.FindPostUseCase,
-        rabbit_mq_service_1.RabbitMQService])
+    __param(2, (0, common_1.Inject)("MessageQueue")),
+    __metadata("design:paramtypes", [Object, find_post_use_case_1.FindPostUseCase, Object])
 ], CreateCommentUseCase);
 //# sourceMappingURL=create-comment.use-case.js.map

@@ -3,11 +3,14 @@ import { CreateCommentSentimenUseCase } from "./create-comment-sentiment.use-cas
 import { CreateSentimentDto } from "../dto/sentiment/create-sentiment.dto";
 import { UpdatePostSentimentUseCase } from "./update-post-sentiment.use-case";
 import { SentimentRequestDto } from "../dto/sentiment-by-post/setiment-request.dto";
+import { Inject, Injectable } from "@nestjs/common";
 
+@Injectable()
 export class ReadSentimentFromQueueUseCase {
   constructor(
     private readonly createSentimentUseCase: CreateCommentSentimenUseCase,
     private readonly UpdatePostSentimentUseCase: UpdatePostSentimentUseCase,
+    @Inject("MessageQueue")
     private readonly rabbitmqService: MessageQueue
   ) {}
 

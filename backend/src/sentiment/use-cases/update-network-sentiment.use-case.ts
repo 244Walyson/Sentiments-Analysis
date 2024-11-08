@@ -34,8 +34,7 @@ export class UpdateNetworkSentimentUseCase {
       );
       currentSentiment.total += 1;
       const updatedSentiment = await this.sentimentByNetworkRepository.update(
-        sentiment.companyId,
-        sentiment.network,
+        currentSentiment.id,
         sentiment
       );
       return new SentimentByNetworkResponseDto({ ...updatedSentiment });

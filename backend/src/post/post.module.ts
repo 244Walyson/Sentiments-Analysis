@@ -1,17 +1,16 @@
 import { Module } from "@nestjs/common";
 import { PostController } from "./post.controller";
-import { RabbitMQService } from "src/rabbit-mq/rabbit-mq.service";
+import { RabbitMQService } from "../rabbit-mq/rabbit-mq.service";
 import { CreatePostUseCase } from "./use-cases/create-post.use-case";
 import { CreateCommentUseCase } from "./use-cases/create-comment.use-case";
 import { FindPostUseCase } from "./use-cases/find-post.use-case";
-import { PostRepositoryImpl } from "./repositories/post.repository.impl";
 import { CommentRepositoryImpl } from "./repositories/comment-repository.impl";
-import { PrismaService } from "src/prisma.service";
+import { PrismaService } from "../prisma.service";
+import { PostRepositoryImpl } from "./repositories/post.repository.impl";
 
 @Module({
   controllers: [PostController],
   providers: [
-    RabbitMQService,
     CreatePostUseCase,
     CreateCommentUseCase,
     FindPostUseCase,
@@ -24,6 +23,11 @@ import { PrismaService } from "src/prisma.service";
       provide: "CommentRepositoryInterface",
       useClass: CommentRepositoryImpl,
     },
+    {
+      provide: "MessageQueue",
+      useClass: RabbitMQService,
+    },
   ],
+  exports: [FindPostUseCase],
 })
 export class PostModule {}

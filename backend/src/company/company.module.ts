@@ -12,5 +12,6 @@ import { CompanyRepositoryImpl } from "./repositories/company.repository.impl";
       useClass: CompanyRepositoryImpl,
     },
   ],
+  exports: [FindCompanyUseCase],
 })
 export class CompanyModule {}

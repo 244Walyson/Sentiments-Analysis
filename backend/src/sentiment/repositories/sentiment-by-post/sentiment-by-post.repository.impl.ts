@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { SentimentByPostRepositoryInterface } from "./sentiment-by-post.repository.interface";
-import { PrismaService } from "src/prisma.service";
+import { PrismaService } from "../../../prisma.service";
 
 @Injectable()
-export class SentimentByPostImpl implements SentimentByPostRepositoryInterface {
+export class SentimentByPostRepositoryImpl
+  implements SentimentByPostRepositoryInterface
+{
   constructor(private readonly prismaService: PrismaService) {}
 
   async findAll(): Promise<any[]> {

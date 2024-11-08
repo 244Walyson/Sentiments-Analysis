@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PostRepositoryInterface } from "../repositories/post.repository.interface";
 import { ResponsePostDto } from "../dto/response-post.dto";
-import { CustomException } from "src/exceptions/custom.exception";
+import { CustomException } from "../../exceptions/custom.exception";
 
 @Injectable()
 export class FindPostUseCase {
