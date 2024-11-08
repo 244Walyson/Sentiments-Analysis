@@ -50,7 +50,7 @@ create table posts (
     is_active boolean default true
 );
 
-create table comments (
+create table comment (
     id VARCHAR(255) PRIMARY KEY,
     postId VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,

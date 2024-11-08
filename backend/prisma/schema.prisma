@@ -93,12 +93,30 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id        String      @id @default(cuid())
+  post      Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
-  commentId String   @unique
+  commentId String      @unique
   content   String
-  createdAt DateTime @default(now())
+  createdAt DateTime    @default(now())
+  Sentiment Sentiment[]
+}
+
+model Sentiment {
+  id             String   @id @default(cuid())
+  Comment        Comment  @relation(fields: [commentId], references: [id])
+  commentId      String
+  polarity       Int
+  sentiment      String
+  confidence     Float
+  probabilities  String
+  classPredicted Int
+  logits         String
+  numTokens      Int
+  inference_time Float
+  createdAt      DateTime @default(now())
+
+  @@map("sentiment")
 }
 
 model Engagement {
@@ -125,15 +143,17 @@ model AudienceByNetwork {
 }
 
 model SentimentByNetwork {
-  id            String   @id @default(cuid())
-  company       Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId     String
-  network       String
-  positive      Int?
-  negative      Int?
-  neutral       Int?
-  totalMentions Int?
-  createdAt     DateTime @default(now())
+  id         String   @id @default(cuid())
+  company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String
+  network    String
+  positive   Int?
+  negative   Int?
+  neutral    Int?
+  toatal     Int?
+  confidence Float?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model SentimentByPost {
@@ -145,7 +165,9 @@ model SentimentByPost {
   negative      Int?
   neutral       Int?
   totalComments Int?
+  confidence    Float?
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   Company       Company  @relation(fields: [companyId], references: [id])
   companyId     String
 }

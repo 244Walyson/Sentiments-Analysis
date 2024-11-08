@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { SentimentService } from './sentiment.service';
-import { CreateSentimentDto } from './dto/create-sentiment.dto';
-import { UpdateSentimentDto } from './dto/update-sentiment.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from "@nestjs/common";
+import { SentimentService } from "./sentiment.service";
+import { CreateSentimentDto } from "./dto/sentiment/create-sentiment.dto";
+import { UpdateSentimentDto } from "./dto/update-sentiment.dto";
 
-@Controller('sentiment')
+@Controller("sentiment")
 export class SentimentController {
   constructor(private readonly sentimentService: SentimentService) {}
 
@@ -17,18 +25,21 @@ export class SentimentController {
     return this.sentimentService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.sentimentService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSentimentDto: UpdateSentimentDto) {
+  @Patch(":id")
+  update(
+    @Param("id") id: string,
+    @Body() updateSentimentDto: UpdateSentimentDto
+  ) {
     return this.sentimentService.update(+id, updateSentimentDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.sentimentService.remove(+id);
   }
 }

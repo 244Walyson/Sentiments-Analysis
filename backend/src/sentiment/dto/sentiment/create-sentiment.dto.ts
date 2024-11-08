@@ -1,8 +1,13 @@
-export class Sentiment {
-  id: string;
+import { IsNotEmpty } from "class-validator";
+
+export class CreateSentimentDto {
+  @IsNotEmpty()
   commentId: string;
+  @IsNotEmpty()
   polarity: number;
+  @IsNotEmpty()
   sentiment: string;
+  @IsNotEmpty()
   coonfidence: number;
   probability: object;
   classPredicted: string;
@@ -10,7 +15,7 @@ export class Sentiment {
   numTokens: number;
   createdAt: Date;
 
-  constructor(props: Partial<Sentiment>) {
+  constructor(props: Partial<CreateSentimentDto>) {
     Object.assign(this, props);
   }
 }

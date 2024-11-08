@@ -1,16 +1,17 @@
-export class Sentiment {
+export class SentimentRequestDto {
   id: string;
   commentId: string;
+  postId: string;
   polarity: number;
   sentiment: string;
-  coonfidence: number;
+  confidence: number;
   probability: object;
   classPredicted: string;
   logits: object;
   numTokens: number;
   createdAt: Date;
 
-  constructor(props: Partial<Sentiment>) {
+  constructor(props: Partial<SentimentRequestDto>) {
     Object.assign(this, props);
   }
 }

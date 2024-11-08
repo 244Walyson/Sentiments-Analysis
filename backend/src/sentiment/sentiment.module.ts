@@ -1,9 +1,15 @@
-import { Module } from '@nestjs/common';
-import { SentimentService } from './sentiment.service';
-import { SentimentController } from './sentiment.controller';
+import { Module } from "@nestjs/common";
+import { SentimentController } from "./sentiment.controller";
+import { SentimentRepositoryImpl } from "./repositories/sentiment/sentiment.respository.impl";
 
 @Module({
   controllers: [SentimentController],
-  providers: [SentimentService],
+  providers: [
+    ,
+    {
+      provide: "SentimentRepositoryInterface",
+      useClass: SentimentRepositoryImpl,
+    },
+  ],
 })
 export class SentimentModule {}
