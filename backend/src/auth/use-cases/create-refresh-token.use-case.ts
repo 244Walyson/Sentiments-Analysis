@@ -2,7 +2,6 @@ import { Inject, Injectable } from "@nestjs/common";
 import { RefreshTokenRepositoryInterface } from "../repositories/refresh-token.repository.interface";
 import { RefreshToken } from "../entities/refresh-token.entity";
 import * as crypto from "crypto";
-import * as bcrypt from "bcryptjs";
 import { RefreshTokenDto } from "../dto/refresh-token.dto";
 
 @Injectable()

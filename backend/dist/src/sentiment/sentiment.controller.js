@@ -8,15 +8,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SentimentController = void 0;
 const common_1 = require("@nestjs/common");
+const microservices_1 = require("@nestjs/microservices");
 let SentimentController = class SentimentController {
     constructor() { }
+    async handle(payload, context) {
+        console.log(payload);
+        const channel = context.getChannelRef();
+        const originalMsg = context.getMessage();
+        try {
+            console.log("Message received:", payload);
+        }
+        catch (error) {
+            console.log(error);
+        }
+        channel.ack(originalMsg);
+    }
 };
 exports.SentimentController = SentimentController;
+__decorate([
+    (0, microservices_1.EventPattern)("comment_sentiment"),
+    __param(0, (0, microservices_1.Payload)()),
+    __param(1, (0, microservices_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, microservices_1.RmqContext]),
+    __metadata("design:returntype", Promise)
+], SentimentController.prototype, "handle", null);
 exports.SentimentController = SentimentController = __decorate([
-    (0, common_1.Controller)("sentiment"),
+    (0, common_1.Controller)(),
     __metadata("design:paramtypes", [])
 ], SentimentController);
 //# sourceMappingURL=sentiment.controller.js.map
