@@ -26,7 +26,10 @@ export const ThemeToggle = () => {
         onCheckedChange={handleClick}
         className="absolute"
       />
-      <Label htmlFor="theme-switch" className="cursor-pointer absolute">
+      <Label
+        htmlFor="theme-switch"
+        className="cursor-pointer absolute bg-transparent"
+      >
         {theme === "light" ? <Sun color="#f59e0b" /> : <MoonStar />}
       </Label>
     </div>

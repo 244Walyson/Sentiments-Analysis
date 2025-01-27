@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Theme from "@/context/ThemeContext";
 import { ABeeZee } from "@next/font/google";
-import Navbar from "@/components/navbar";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const abeezee = ABeeZee({
   subsets: ["latin"],
@@ -22,14 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${abeezee.className} dark:bg-background text-primary w-screen h-screen`}
+        className={`${abeezee.className} dark:bg-background text-primary w-screen h-screen overflow-hidden`}
         suppressHydrationWarning
       >
+        <GoogleOAuthProvider clientId="484322412237-os76sa974imc4ocfccg2qasgdgp5pbs5.apps.googleusercontent.com">
         <Theme>
-          <main className="pl-24 pr-10 py-14 h-full w-full overflow-x-hidden">
-            {children}
-          </main>
+          <main className="h-full w-full overflow-x-hidden">{children}</main>
         </Theme>
+        </GoogleOAuthProvider>;
       </body>
     </html>
   );
