@@ -4,14 +4,36 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { Mail, Lock, ArrowRight } from "lucide-react";
+import { Mail, Lock, ArrowRight, Eye, EyeClosed, User } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 
+const REDIRECT_URI =
+  process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000/login";
+const GITHUB_CLIENT_ID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+
+enum OperationEnum {
+  LOGIN = "Entrar",
+  RECOVER_PASSWORD = "Recuperar Senha",
+  REGISTER = "Registrar-se",
+}
+
 const FormLogin = () => {
-  const login = useGoogleLogin({
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+  const [operation, setOperation] = React.useState<OperationEnum>(
+    OperationEnum.LOGIN
+  );
+
+  const handleGoogleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => console.log(tokenResponse),
     onError: (error) => console.error(error),
   });
+
+  const handleGithubLogin = () => {
+    const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+      REDIRECT_URI
+    )}&scope=user`;
+    window.location.href = githubAuthURL;
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -31,6 +53,27 @@ const FormLogin = () => {
           </div>
 
           <div className="space-y-4">
+            {operation === OperationEnum.REGISTER && (
+              <>
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    className="pl-10 h-12"
+                    type="text"
+                    placeholder="Seu nome"
+                  />
+                </div>
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    className="pl-10 h-12"
+                    type="text"
+                    placeholder="Seu nome de usuario"
+                  />
+                </div>
+              </>
+            )}
+
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
               <Input
@@ -40,26 +83,50 @@ const FormLogin = () => {
               />
             </div>
 
-            <div className="relative">
+            <div
+              className={`relative ${
+                operation === OperationEnum.RECOVER_PASSWORD ? "hidden" : ""
+              }`}
+            >
               <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
               <Input
                 className="pl-10 h-12"
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 placeholder="Sua senha"
               />
+              {isPasswordVisible ? (
+                <Eye
+                  className="absolute right-3 top-4 h-5 w-5 text-gray-400"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                />
+              ) : (
+                <EyeClosed
+                  className="absolute right-3 top-4 h-5 w-5 text-gray-400"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                />
+              )}
             </div>
 
             <div className="flex justify-end">
-              <a
-                href="#"
-                className="text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400"
+              <button
+                className="text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 cursor-pointer"
+                onClick={() =>
+                  setOperation(
+                    operation !== OperationEnum.LOGIN
+                      ? OperationEnum.LOGIN
+                      : OperationEnum.RECOVER_PASSWORD
+                  )
+                }
               >
-                Esqueceu a senha?
-              </a>
+                {operation === OperationEnum.RECOVER_PASSWORD ||
+                operation === OperationEnum.REGISTER
+                  ? "Voltar"
+                  : "Esqueceu sua senha?"}
+              </button>
             </div>
 
             <Button className="w-full h-12 bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center gap-2">
-              Entrar
+              {operation}
               <ArrowRight className="w-4 h-4" />
             </Button>
 
@@ -78,7 +145,7 @@ const FormLogin = () => {
               <Button
                 variant="outline"
                 className="h-12"
-                onClick={() => login()}
+                onClick={() => handleGoogleLogin()}
               >
                 <Image
                   src="/Google.svg"
@@ -89,7 +156,11 @@ const FormLogin = () => {
                 />
                 Google
               </Button>
-              <Button variant="outline" className="h-12">
+              <Button
+                variant="outline"
+                className="h-12"
+                onClick={() => handleGithubLogin()}
+              >
                 <Image
                   src="/Github.svg"
                   alt="Github"
@@ -110,12 +181,12 @@ const FormLogin = () => {
 
             <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
               Não tem uma conta?{" "}
-              <a
-                href="#"
+              <button
+                onClick={() => setOperation(OperationEnum.REGISTER)}
                 className="text-blue-500 hover:text-blue-600 dark:text-blue-400"
               >
                 Registre-se
-              </a>
+              </button>
             </p>
           </div>
         </CardContent>
