@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Theme from "@/context/ThemeContext";
 import { ABeeZee } from "@next/font/google";
-import Navbar from "@/components/navbar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/app-sidebar/app-sidebar";
 
 const abeezee = ABeeZee({
   subsets: ["latin"],
@@ -26,11 +27,20 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Theme>
-          <Navbar>
+          <SidebarProvider
+            style={
+              {
+                "--sidebar-width": "20rem",
+                "--sidebar-width-mobile": "20rem",
+              } as React.CSSProperties
+            }
+          >
+            <AppSidebar />
+            <SidebarTrigger />
             <main className="pl-24 pr-10 py-14 h-full w-full overflow-x-hidden">
               {children}
             </main>
-          </Navbar>
+          </SidebarProvider>
         </Theme>
       </body>
     </html>
