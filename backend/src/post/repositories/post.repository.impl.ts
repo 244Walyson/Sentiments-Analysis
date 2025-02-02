@@ -13,8 +13,8 @@ export class PostRepositoryImpl implements PostRepositoryInterface {
     return await this.prismaService.post.update({ where: { id }, data: user });
   }
   async findOne(id: string): Promise<any> {
-    return await this.prismaService.post.findUnique({
-      where: { id },
+    return await this.prismaService.post.findFirst({
+      where: { OR: [{ id }, { postId: id }] },
     });
   }
   async delete(id: string): Promise<any> {

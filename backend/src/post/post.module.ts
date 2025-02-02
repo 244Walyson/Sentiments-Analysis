@@ -7,6 +7,10 @@ import { FindPostUseCase } from "./use-cases/find-post.use-case";
 import { CommentRepositoryImpl } from "./repositories/comment-repository.impl";
 import { PrismaService } from "../prisma.service";
 import { PostRepositoryImpl } from "./repositories/post.repository.impl";
+import { GetInstagramPostUseCase } from "./use-cases/get-instagram-posts-by-user-id.use-case";
+import { InstagramRepository } from "./repositories/instagram-client.repository";
+import { GetInstagramCommentsUseCase } from "./use-cases/get-instagram-commets-by-post-id.usecase";
+import { ReadPostFromQueueUseCase } from "./use-cases/read-post-from-queue.use-case";
 
 @Module({
   controllers: [PostController],
@@ -14,7 +18,11 @@ import { PostRepositoryImpl } from "./repositories/post.repository.impl";
     CreatePostUseCase,
     CreateCommentUseCase,
     FindPostUseCase,
+    GetInstagramPostUseCase,
+    GetInstagramCommentsUseCase,
+    InstagramRepository,
     PrismaService,
+    ReadPostFromQueueUseCase,
     {
       provide: "PostRepositoryInterface",
       useClass: PostRepositoryImpl,

@@ -41,15 +41,15 @@ export class RabbitMQService implements MessageQueue, OnModuleInit {
     }
   }
 
-  async publish(queue: string, message: any): Promise<void> {
+  async publish(queue: string, message: any, traceId?: string): Promise<void> {
     try {
       await this.channel.assertQueue(queue, { durable: true });
       this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), {
         persistent: true,
       });
-      this.logger.log(`Message sent to queue ${queue}: ${JSON.stringify(message)}`);
+      this.logger.log(`[${traceId}] Message sent to queue ${queue}: ${JSON.stringify(message)}`);
     } catch (error) {
-      this.logger.error(`Error publishing message to queue ${queue}:`, error);
+      this.logger.error(`[${traceId}] Error publishing message to queue ${queue}:`, error);
     }
   }
 }

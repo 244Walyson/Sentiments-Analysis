@@ -7,5 +7,5 @@ export declare class RabbitMQService implements MessageQueue, OnModuleInit {
     onModuleInit(): Promise<void>;
     private connect;
     subscribe(queue: string, callback: (message: any) => void): Promise<void>;
-    publish(queue: string, message: any): Promise<void>;
+    publish(queue: string, message: any, traceId?: string): Promise<void>;
 }

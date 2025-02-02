@@ -4,10 +4,11 @@ import { CommentRepositoryInterface } from "../repositories/comment-repository.i
 import { FindPostUseCase } from "./find-post.use-case";
 import { MessageQueue } from "src/interfaces/message-queue.interface";
 export declare class CreateCommentUseCase {
-    private commentRepository;
-    private findPostUseCase;
-    private rabbitMqService;
+    private readonly commentRepository;
+    private readonly findPostUseCase;
+    private readonly rabbitMqService;
+    private readonly logger;
     constructor(commentRepository: CommentRepositoryInterface, findPostUseCase: FindPostUseCase, rabbitMqService: MessageQueue);
-    execute(data: CreateCommentDto): Promise<ResponseCommentDto>;
+    execute(data: CreateCommentDto, traceId?: string): Promise<ResponseCommentDto>;
     private sendCommentToRabbitMQ;
 }

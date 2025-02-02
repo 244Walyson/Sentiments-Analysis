@@ -44,16 +44,16 @@ let RabbitMQService = RabbitMQService_1 = class RabbitMQService {
             this.logger.error(`Error subscribing to queue ${queue}:`, error);
         }
     }
-    async publish(queue, message) {
+    async publish(queue, message, traceId) {
         try {
             await this.channel.assertQueue(queue, { durable: true });
             this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), {
                 persistent: true,
             });
-            this.logger.log(`Message sent to queue ${queue}: ${JSON.stringify(message)}`);
+            this.logger.log(`[${traceId}] Message sent to queue ${queue}: ${JSON.stringify(message)}`);
         }
         catch (error) {
-            this.logger.error(`Error publishing message to queue ${queue}:`, error);
+            this.logger.error(`[${traceId}] Error publishing message to queue ${queue}:`, error);
         }
     }
 };

@@ -4,6 +4,7 @@ import Theme from "@/context/ThemeContext";
 import { ABeeZee } from "@next/font/google";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar/app-sidebar";
+import HeaderComponent from "@/components/header/Header";
 
 const abeezee = ABeeZee({
   subsets: ["latin"],
@@ -37,7 +38,8 @@ export default function RootLayout({
           >
             <AppSidebar />
             <SidebarTrigger />
-            <main className="pl-24 pr-10 py-14 h-full w-full overflow-x-hidden">
+            <main className="px-10 py-14 h-full w-full overflow-x-hidden">
+              <HeaderComponent />
               {children}
             </main>
           </SidebarProvider>

@@ -11,39 +11,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var CreateCommentUseCase_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCommentUseCase = void 0;
-const custom_exception_1 = require("../../exceptions/custom.exception");
 const response_comment_dto_1 = require("../dto/response-comment.dto");
 const find_post_use_case_1 = require("./find-post.use-case");
 const common_1 = require("@nestjs/common");
 const comment_entity_1 = require("../entities/comment.entity");
-let CreateCommentUseCase = class CreateCommentUseCase {
+let CreateCommentUseCase = CreateCommentUseCase_1 = class CreateCommentUseCase {
     constructor(commentRepository, findPostUseCase, rabbitMqService) {
         this.commentRepository = commentRepository;
         this.findPostUseCase = findPostUseCase;
         this.rabbitMqService = rabbitMqService;
+        this.logger = new common_1.Logger(CreateCommentUseCase_1.name);
     }
-    async execute(data) {
+    async execute(data, traceId) {
         try {
-            await this.findPostUseCase.execute(data.postId);
+            traceId = traceId || crypto.randomUUID();
+            this.logger.log(`[${traceId}] Creating comment for post id: ${data.postId}`);
+            await this.findPostUseCase.execute(data.postId, traceId);
             const comment = new comment_entity_1.Comment({ ...data });
-            const createdComment = await this.commentRepository.create(data);
+            const createdComment = await this.commentRepository.create(comment);
             const commentResponse = new response_comment_dto_1.ResponseCommentDto({ ...createdComment });
-            await this.sendCommentToRabbitMQ(commentResponse);
+            await this.sendCommentToRabbitMQ(commentResponse, traceId);
+            this.logger.log(`[${traceId}] Comment created successfully for post id: ${data.postId}`);
             return commentResponse;
         }
         catch (error) {
-            console.log(error);
-            throw new custom_exception_1.CustomException("Bad Request", "Error creating comment", 400);
+            this.logger.error(`[${traceId}] Error creating comment: `, error);
+            throw new common_1.BadRequestException(`[${traceId}] Error creating comment`);
         }
     }
-    async sendCommentToRabbitMQ(comment) {
-        await this.rabbitMqService.publish("comments-queue", comment);
+    async sendCommentToRabbitMQ(comment, traceId) {
+        const data = { traceId, ...comment };
+        await this.rabbitMqService.publish("comments-queue", data, traceId);
     }
 };
 exports.CreateCommentUseCase = CreateCommentUseCase;
-exports.CreateCommentUseCase = CreateCommentUseCase = __decorate([
+exports.CreateCommentUseCase = CreateCommentUseCase = CreateCommentUseCase_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)("CommentRepositoryInterface")),
     __param(2, (0, common_1.Inject)("MessageQueue")),

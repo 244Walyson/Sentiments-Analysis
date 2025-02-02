@@ -9,6 +9,9 @@ export class CreateCommentDto {
   @IsNotEmpty()
   content: string;
   @IsNotEmpty()
+  author: string;
+  @IsNotEmpty()
+  timestamp: Date;
   createdAt: Date;
 
   constructor(props: Partial<CreateCommentDto>) {

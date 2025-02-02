@@ -3,6 +3,8 @@ export declare class CreateCommentDto {
     commentId: string;
     postId: string;
     content: string;
+    author: string;
+    timestamp: Date;
     createdAt: Date;
     constructor(props: Partial<CreateCommentDto>);
 }

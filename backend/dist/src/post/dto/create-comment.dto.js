@@ -31,6 +31,10 @@ __decorate([
 ], CreateCommentDto.prototype, "content", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateCommentDto.prototype, "author", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Date)
-], CreateCommentDto.prototype, "createdAt", void 0);
+], CreateCommentDto.prototype, "timestamp", void 0);
 //# sourceMappingURL=create-comment.dto.js.map

@@ -1,4 +1,5 @@
 export enum NetworkEnum {
   INSTAGRAM = "INSTAGRAM",
-  TWITTER = "TWITTER",
+  X = "X",
+  LINKEDIN = "LINKEDIN",
 }

@@ -10,7 +10,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -83,8 +83,11 @@ model Post {
   content         String?
   createdAt       DateTime @default(now())
   engagementScore Int?
+  mediaType       String?
   sentimentScore  Int?
   isActive        Boolean  @default(true)
+
+  mediaUrls String[]
 
   audienceByNetwork AudienceByNetwork[]
   engagements       Engagement[]
@@ -94,10 +97,12 @@ model Post {
 
 model Comment {
   id        String      @id @default(cuid())
-  post      Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post      Post        @relation(fields: [postId], references: [postId], onDelete: Cascade)
   postId    String
   commentId String      @unique
   content   String
+  author    String
+  timestamp DateTime
   createdAt DateTime    @default(now())
   Sentiment Sentiment[]
 }

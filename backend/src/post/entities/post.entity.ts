@@ -1,5 +1,4 @@
-import { Company } from "src/company/entities/company.entity";
-import { NetworkEnum } from "./network.enum";
+import { NetworkEnum } from "./enums/network.enum";
 
 export class Post {
   id: string;
@@ -7,11 +6,11 @@ export class Post {
   companyId: string;
   network: NetworkEnum;
   postUrl: string;
-  content: String;
+  content?: string;
   createdAt: Date;
-  engagementScore: Float32Array;
-  sentimentScore: Float32Array;
   isActive: boolean = true;
+  mediaType?: string;
+  mediaUrls?: string[];
 
   constructor(props: Partial<Post>) {
     Object.assign(this, props);

@@ -16,6 +16,10 @@ const find_post_use_case_1 = require("./use-cases/find-post.use-case");
 const comment_repository_impl_1 = require("./repositories/comment-repository.impl");
 const prisma_service_1 = require("../prisma.service");
 const post_repository_impl_1 = require("./repositories/post.repository.impl");
+const get_instagram_posts_by_user_id_use_case_1 = require("./use-cases/get-instagram-posts-by-user-id.use-case");
+const instagram_client_repository_1 = require("./repositories/instagram-client.repository");
+const get_instagram_commets_by_post_id_usecase_1 = require("./use-cases/get-instagram-commets-by-post-id.usecase");
+const read_post_from_queue_use_case_1 = require("./use-cases/read-post-from-queue.use-case");
 let PostModule = class PostModule {
 };
 exports.PostModule = PostModule;
@@ -26,7 +30,11 @@ exports.PostModule = PostModule = __decorate([
             create_post_use_case_1.CreatePostUseCase,
             create_comment_use_case_1.CreateCommentUseCase,
             find_post_use_case_1.FindPostUseCase,
+            get_instagram_posts_by_user_id_use_case_1.GetInstagramPostUseCase,
+            get_instagram_commets_by_post_id_usecase_1.GetInstagramCommentsUseCase,
+            instagram_client_repository_1.InstagramRepository,
             prisma_service_1.PrismaService,
+            read_post_from_queue_use_case_1.ReadPostFromQueueUseCase,
             {
                 provide: "PostRepositoryInterface",
                 useClass: post_repository_impl_1.PostRepositoryImpl,

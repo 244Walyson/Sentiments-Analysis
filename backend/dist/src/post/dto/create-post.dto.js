@@ -11,9 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePostDto = void 0;
 const class_validator_1 = require("class-validator");
-const network_enum_1 = require("../entities/network.enum");
+const network_enum_1 = require("../entities/enums/network.enum");
 class CreatePostDto {
     constructor(props) {
+        this.isActive = true;
         Object.assign(this, props);
     }
 }
@@ -28,10 +29,29 @@ __decorate([
 ], CreatePostDto.prototype, "companyId", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(network_enum_1.NetworkEnum),
     __metadata("design:type", String)
 ], CreatePostDto.prototype, "network", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreatePostDto.prototype, "postUrl", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreatePostDto.prototype, "content", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], CreatePostDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreatePostDto.prototype, "mediaType", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], CreatePostDto.prototype, "mediaUrls", void 0);
 //# sourceMappingURL=create-post.dto.js.map

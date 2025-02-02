@@ -1,13 +1,13 @@
-import { NetworkEnum } from "../entities/network.enum";
+import { NetworkEnum } from "../entities/enums/network.enum";
 export declare class ResponsePostDto {
     id: string;
-    company_id: string;
+    postId: string;
+    companyId: string;
     network: NetworkEnum;
-    post_url: string;
-    content: String;
-    created_at: Date;
-    engagement_score: Float32Array;
-    sentiment_score: Float32Array;
-    is_active: boolean;
+    postUrl: string;
+    mediaUrl: string;
+    content: string;
+    createdAt: Date;
+    isActive: boolean;
     constructor(props: Partial<ResponsePostDto>);
 }

@@ -23,8 +23,8 @@ let PostRepositoryImpl = class PostRepositoryImpl {
         return await this.prismaService.post.update({ where: { id }, data: user });
     }
     async findOne(id) {
-        return await this.prismaService.post.findUnique({
-            where: { id },
+        return await this.prismaService.post.findFirst({
+            where: { OR: [{ id }, { postId: id }] },
         });
     }
     async delete(id) {

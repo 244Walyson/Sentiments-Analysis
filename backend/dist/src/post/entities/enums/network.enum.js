@@ -4,6 +4,7 @@ exports.NetworkEnum = void 0;
 var NetworkEnum;
 (function (NetworkEnum) {
     NetworkEnum["INSTAGRAM"] = "INSTAGRAM";
-    NetworkEnum["TWITTER"] = "TWITTER";
+    NetworkEnum["X"] = "X";
+    NetworkEnum["LINKEDIN"] = "LINKEDIN";
 })(NetworkEnum || (exports.NetworkEnum = NetworkEnum = {}));
 //# sourceMappingURL=network.enum.js.map

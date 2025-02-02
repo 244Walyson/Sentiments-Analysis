@@ -1,14 +1,14 @@
-import { NetworkEnum } from "./network.enum";
+import { NetworkEnum } from "./enums/network.enum";
 export declare class Post {
     id: string;
     postId: string;
     companyId: string;
     network: NetworkEnum;
     postUrl: string;
-    content: String;
+    content?: string;
     createdAt: Date;
-    engagementScore: Float32Array;
-    sentimentScore: Float32Array;
     isActive: boolean;
+    mediaType?: string;
+    mediaUrls?: string[];
     constructor(props: Partial<Post>);
 }

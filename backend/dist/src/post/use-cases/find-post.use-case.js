@@ -11,27 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var FindPostUseCase_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FindPostUseCase = void 0;
 const common_1 = require("@nestjs/common");
 const response_post_dto_1 = require("../dto/response-post.dto");
-const custom_exception_1 = require("../../exceptions/custom.exception");
-let FindPostUseCase = class FindPostUseCase {
+let FindPostUseCase = FindPostUseCase_1 = class FindPostUseCase {
     constructor(postRepository) {
         this.postRepository = postRepository;
+        this.logger = new common_1.Logger(FindPostUseCase_1.name);
     }
-    async execute(id) {
+    async execute(id, traceId) {
         try {
             const post = await this.postRepository.findOne(id);
+            if (!post) {
+                this.logger.error(`[${traceId}] Post not found`);
+                throw new common_1.NotFoundException(`[${traceId}] Post not found`);
+            }
             return new response_post_dto_1.ResponsePostDto({ ...post });
         }
         catch (error) {
-            throw new custom_exception_1.CustomException("Not Found", "Post Not Found", 400);
+            this.logger.error(`[${traceId}] Error finding post: `, error);
+            throw new common_1.NotFoundException(`[${traceId}] Error finding post`);
         }
     }
 };
 exports.FindPostUseCase = FindPostUseCase;
-exports.FindPostUseCase = FindPostUseCase = __decorate([
+exports.FindPostUseCase = FindPostUseCase = FindPostUseCase_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)("PostRepositoryInterface")),
     __metadata("design:paramtypes", [Object])
